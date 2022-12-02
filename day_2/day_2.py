@@ -2,7 +2,7 @@
 # print(list(tabPart1.keys())[-1])
 #print(list(tabPart2.keys()).index(opponent))
 
-with open("data.txt" ,"r") as f:
+with open("day_2/data.txt" ,"r") as f:
     data = f.read().split("\n")
 
 

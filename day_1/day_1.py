@@ -1,4 +1,4 @@
-with open("data.txt" ,"r") as f:
+with open("day_1/data.txt" ,"r") as f:
     data = []
     
     for lutin in f.read().split("\n\n"):    
@@ -8,7 +8,7 @@ with open("data.txt" ,"r") as f:
         data.append(cal)
 
     data.sort()
-    print(data)
+    # print(data)
     print("top 3: ", data[-1],data[-2],data[-3])
     print("somme: ", data[-1]+data[-2]+data[-3])
 
