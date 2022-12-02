@@ -7,8 +7,8 @@ with open("data.txt" ,"r") as f:
             cal += int(i)
         data.append(cal)
 
-    #print(data)
     data.sort()
+    print(data)
     print("top 3: ", data[-1],data[-2],data[-3])
     print("somme: ", data[-1]+data[-2]+data[-3])
 
