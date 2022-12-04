@@ -19,15 +19,14 @@ print("Partie 1: ", totalPart1)
 
 
 totalPart2 = 0
-for i in range(len(data)):
-    if i%3 == 0:
-        m1 = data[i]
-        m2 = data[i+1]
-        m3 = data[i+2]
+for i in range(0, len(data), 3):
+    m1 = data[i]
+    m2 = data[i+1]
+    m3 = data[i+2]
 
-        letter = (set(m1) & set(m2) & set(m3)).pop()
+    letter = (set(m1) & set(m2) & set(m3)).pop()
 
-        totalPart2 += string.ascii_letters.index(letter)+1 
+    totalPart2 += string.ascii_letters.index(letter)+1 
 
 print("Partie 2: ", totalPart2)
 
