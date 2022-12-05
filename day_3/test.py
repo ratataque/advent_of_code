@@ -30,6 +30,22 @@
 # print(string.ascii_letters.index('a')+1)
 
 # print(ord("a")-96)
-# print(ord("A")-38)
+#print(ord("A")-38)
 
 # dataPart2 = [data[i:i+3] for i in range(0, len(data), 3)]
+
+with open("day_3/data.txt" ,"r") as f:
+    data = f.read().split("\n")
+
+# m1 = []
+# m2 = []
+
+
+for row in data:
+    m1 = row[0:len(row)//2]
+    m2 = row[len(row)//2:len(row)]
+
+    print(m1,m2, len(m1),len(m2))
+
+    if m2.__contains__("h"):
+        print(True)
