@@ -1,5 +1,6 @@
 import re
-
+import time
+start_time = time.time()
 
 def build_data():
     data = open("day_15/data.txt", "r").read()
@@ -75,6 +76,7 @@ def part1(data):
 def part2(data):
     
     tests = []
+    diagos = []
     for pair in data:
         sensor_a = pair[0]
         beacon_a = pair[1]
@@ -90,23 +92,53 @@ def part2(data):
                 distance_sensor_ab = manhattan(sensor_a, sensor_b)
                 
                 if distance_beacon_a + distance_beacon_b + 2 == distance_sensor_ab:
-                    # print(sensor_a, sensor_b, distance_sensor_ab)
                     
                     if sensor_a[0] > sensor_b[0]:
-                        blank_line = midle_coord((sensor_a[0]-distance_beacon_a-1, sensor_a[1]), (sensor_b[0]+distance_beacon_b+1, sensor_b[1]))    
-                    else:
-                        blank_line = midle_coord((sensor_a[0]+distance_beacon_a+1, sensor_a[1]), (sensor_b[0]-distance_beacon_b-1, sensor_b[1]))    
-                    
-                    ligne = set(blank_line)
-                    tests.append(ligne)
+                        diagos.append([(sensor_a[0]-distance_beacon_a-1, sensor_a[1]), (sensor_b[0]+distance_beacon_b+1, sensor_b[1])])
 
-    for test in tests:
-        for a in tests:
-            if test != a:
-                if a & test:
-                    reponse = (a&test).pop()
-                    return reponse                    
+                    else:
+                        diagos.append([(sensor_a[0]+distance_beacon_a+1, sensor_a[1]), (sensor_b[0]-distance_beacon_b-1, sensor_b[1])])
+
+    # print(diagos)
+    for diago in diagos:
+        for a in diagos:
+            if diago != a:
+                if diago[0][0] > diago[1][0]:
+                    if diago[0][1] < diago[1][1]:
+                        croissant_a = True
+                    else:
+                        croissant_a = False
+                else:
+                    if diago[0][1] > diago[1][1]:
+                        croissant_a = True
+                    else:
+                        croissant_a = False
+                        
+                if a[0][0] > a[1][0]:
+                    if a[0][1] < a[1][1]:
+                        croissant_b = True
+                    else:
+                        croissant_b = False
+                else:
+                    if a[0][1] > a[1][1]:
+                        croissant_b = True
+                    else:
+                        croissant_b = False
+                
+                # print(diago, a)
+                if (croissant_a and not croissant_b) or (not croissant_a and croissant_b):
+                    if croissant_b:
+                        z = a
+                        a = diago
+                        diago = z
                     
+                    test = ((diago[0][0] + diago[0][1])+(a[0][0] - a[0][1]))
+                    if test % 2 == 0:
+                        x = test//2
+                        y = diago[0][0] + diago[0][1] - x
+                        
+                        return (x,y)
+
 
 def midle_coord(start, end):
     
@@ -144,3 +176,5 @@ if __name__ == '__main__':
     # print(part1(data))
     coord = part2(data)
     print(coord[0] * 4000000 + coord[1])
+
+    print("--- %s seconds ---" % (time.time() - start_time))
