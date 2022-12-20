@@ -23,7 +23,9 @@ def can_moove(cave, dx, dy, sha_rd):
     return True
 
 
-print(data)
+# print(data)
+print(1000000000000//50455*78749+20777)
+print(1000000000000-1000000000000//50455*50455)
 
 sh_co = []
 for index, shape in enumerate(shape_data):
@@ -38,13 +40,13 @@ for index, shape in enumerate(shape_data):
 cave = []
 rocks_fallen = 0
 gas_jet = 0
-while rocks_fallen < 2022:
+while rocks_fallen > 10091:
     for index, shape in enumerate(shape_data):
         cave = copy.deepcopy(shape) + copy.deepcopy(cave)
         
         shape_coord = copy.deepcopy(sh_co[index])
         
-        print(affiche_grid(cave))
+        # print(affiche_grid(cave))
         
         while len(cave) > len(shape)-3 :
             
@@ -64,7 +66,7 @@ while rocks_fallen < 2022:
                     coord[0] -= 1
                     cave[y][coord[0]] = "@"
                                     
-                print(affiche_grid(cave))
+                # print(affiche_grid(cave))
             if can_slide_right:
                 for coord in shape_coord[::-1]:
                     x = coord[0]
@@ -74,7 +76,7 @@ while rocks_fallen < 2022:
                     coord[0] += 1                    
                     cave[y][coord[0]] = "@"
                                     
-                print(affiche_grid(cave))
+                # print(affiche_grid(cave))
             
             gas_jet += 1
                 
@@ -90,7 +92,7 @@ while rocks_fallen < 2022:
                     cave[y][x] = "."                   
                     cave[y+1][x] = "@"
                                     
-                print(affiche_grid(cave))
+                # print(affiche_grid(cave))
                 if "#" not in cave[0]:
                     cave.pop(0)
                 else:
@@ -120,7 +122,7 @@ while rocks_fallen < 2022:
                     coord[0] -= 1
                     cave[y][coord[0]] = "@"
                                     
-                print(affiche_grid(cave))
+                # print(affiche_grid(cave))
             if can_slide_right:
                 for coord in shape_coord[::-1]:
                     x = coord[0]
@@ -130,7 +132,7 @@ while rocks_fallen < 2022:
                     coord[0] += 1                    
                     cave[y][coord[0]] = "@"
                                     
-                print(affiche_grid(cave))
+                # print(affiche_grid(cave))
             
             gas_jet += 1
             
@@ -142,9 +144,9 @@ while rocks_fallen < 2022:
           
         rocks_fallen += 1
         
-        if rocks_fallen >= 2022:
+        if rocks_fallen >= 10091:
             break
-        print(affiche_grid(cave))
+        # print(affiche_grid(cave))
         
         # j'ai besoin des coordonnée pour trouver de chaque shape dans le tableau et de les faire bouger en bas ou en 
         # fonction des inputs, et chaque fois si la ligne au top est  empy je l'a suprime
@@ -153,6 +155,7 @@ while rocks_fallen < 2022:
  
 # print(affiche_grid(cave))
 
+print(len(data))
 print("Part1: ", len(cave))
 
 
