@@ -12,41 +12,48 @@ def part_1(data: list, dico: dict):
     
     print(sum)
     snafu_num = ""
-    # inverse_snafu(sum,0,snafu_num)
+    snafu_num = inverse_snafu(sum,0,snafu_num, 0)
+    return snafu_num
 
-def inverse_snafu(number: int, base: int, snafu_num: str):
-    if number == 0:
-        return snafu_num
+def inverse_snafu(number: int, base: int, snafu_num: str, prime_n: int):
+    if base == number:
+        if prime_n == 1:
+            snafu_num += "0"
+            return snafu_num
+        else:
+            return snafu_num
+    
     for n in range(number):
         diff = somme_power(n)
         if number > base:
-            number = number-base
-            if (number-diff) <= 5**n <= (number+diff): 
-                p = 5**n 
+            if (abs(number-base)-diff) <= 5**n <= (abs(number-base)+diff): 
+                snafu_num += "0"*(prime_n-n-1)    
+                p = base + 5**n 
                 snafu_num += "1"
                 break
                 
-            if (number-diff) <= 2*(5**n) <= (number+diff): 
-                p = 2*(5**n)
+            if (abs(number-base)-diff) <= 2*(5**n) <= (abs(number-base)+diff): 
+                snafu_num += "0"*(prime_n-n-1)    
+                p = base + 2*(5**n)
                 snafu_num += "2"
                 break
         else: 
-            number = abs(number-base)
-            if (number-diff) <= 5**n <= (number+diff): 
-                p = -5**n 
+            if (abs(number-base)-diff) <= 5**n <= (abs(number-base)+diff): 
+                snafu_num += "0"*(prime_n-n-1)    
+                p = base-5**n
                 snafu_num += "-"
                 break
                 
-            if (number-diff) <= 2*(5**n) <= (number+diff): 
-                p = -2*(5**n)
+            if (abs(number-base)-diff) <= 2*(5**n) <= (abs(number-base)+diff): 
+                snafu_num += "0"*(prime_n-n-1)
+                p = base-2*(5**n)
                 snafu_num += "="
                 break
     
-    snafu_num = inverse_snafu(number, p,snafu_num)
+    snafu_num = inverse_snafu(number=number, base=p,snafu_num=snafu_num, prime_n=n)
+    
     return snafu_num
         
-    print(snafu_num)                
-    
     
 def somme_power(n):
     total = 0
@@ -54,8 +61,12 @@ def somme_power(n):
         total += 2*(5**i)
     
     return total
-if __name__ == "__main__":
-    part_1(data, dico)
 
-    snafu_num = ""
-    print(inverse_snafu(906,0,snafu_num))
+
+if __name__ == "__main__":
+    p1 = part_1(data, dico)
+
+    # snafu_num = ""
+    # print(inverse_snafu(20,0,snafu_num,0))
+
+    print("Part 1: ", p1)
