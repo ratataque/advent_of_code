@@ -55,12 +55,12 @@ def move_blizard(empty_grid: list, blizz_coord: list):
         new_grid[my][mx] = d
         blizz_coord[i] = [mx, my, d]
     
-    affiche_grid(new_grid)
+    # affiche_grid(new_grid)
     
-    return blizz_coord
+    return (new_grid, blizz_coord)
 
 def bfs(start: tuple, end: tuple, grid: list, blizz_coord: list):
-    directions = [(0, -1), (1, 0), (0, 1), (-1, 0)]
+    directions = [(0, -1), (1, 0), (0, 1), (-1, 0), (0, 0)]
     
     pre_queue = []
     pre_queue.append(start)
@@ -72,42 +72,67 @@ def bfs(start: tuple, end: tuple, grid: list, blizz_coord: list):
     
     minute = 0
     while pre_queue:
+        for i in pre_queue:
+            if i == end:
+                return (minute, blizz_coord)
+        
+        grid, blizz_coord = move_blizard(empty_grid, blizz_coord)
+        b_c = []
+        for a in blizz_coord:
+            b_c.append((a[0], a[1]))
+        # affiche_grid(grid)
+
+        pre_queue = []
         while queue:
-            
+                
             x, y = queue.pop(0)
-            
-            if (x, y) == end:
-                return minute
-            
-            visited.append((x, y))
+        
+            # visited.append((x, y))
                         
             for dir in directions:
                 dx, dy = dir
                 mx ,my = x+dx, y+dy
-                
+            
                 if ((1 <= mx < len(grid[y])-1) and 
                     (1 <= my < len(grid)-1) and
-                    (mx, my) not in visited and
-                    (mx, my) not in blizz_coord):
+                    # (mx, my) not in visited and
+                    (mx, my) not in b_c) or (mx, my) == start or (mx, my) == end:
                     
-                    grid[y][x] = "E"
-                    pre_queue.append((x, y))
+                    grid[my][mx] = "E"
+                    if (mx, my) not in pre_queue:
+                        pre_queue.append((mx, my))
+
+        minute += 1
+        print(minute)
+        affiche_grid(grid)
+        queue.extend(pre_queue)
         
-        
-        
-        
-    return grid
+    return False
         
 
 
-
-
-    
 if __name__ == "__main__":
     affiche_grid(grid)
  
     
     blizz_coord = get_bliz_coord(grid)
+    min = 0
+
+    res = bfs((1,0), (100,36), grid, blizz_coord)
+    min += res[0]
+    blizz_coord = res[1]
     
-    for i in range(18):
-        blizz_coord = move_blizard(empty_grid, blizz_coord)
+    print(min)
+    
+    res = bfs((100,36), (1,0), grid, blizz_coord)
+    min += res[0]
+    blizz_coord = res[1]
+    
+    print(min)
+    
+    res = bfs((1,0), (100,36), grid, blizz_coord)
+    min += res[0]
+    blizz_coord = res[1]
+
+    print(min)
+
